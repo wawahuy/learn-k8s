@@ -14,3 +14,8 @@ sudo chmod -R 777 certs
 
 # 
 kubectl create secret generic kubernetes-dashboard-certs --from-file=certs -n kubernetes-dashboard
+
+#
+kubectl apply -f k8s/admin-user.yaml
+# kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+kubectl -n kubernetes-dashboard create token admin-user

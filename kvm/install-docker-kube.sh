@@ -13,8 +13,9 @@ systemctl restart docker
 
 # Issue master init
 # https://github.com/containerd/containerd/issues/4581
-# rm -rf /etc/containerd/config.toml
-# systemctl restart containerd
+# https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+rm -rf /etc/containerd/config.toml
+systemctl restart containerd
 
 # Disable SELinux
 setenforce 0
@@ -24,17 +25,26 @@ sed -i --follow-symlinks 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig
 systemctl disable firewalld >/dev/null 2>&1
 systemctl stop firewalld
 
-# sysctl
-cat >>/etc/sysctl.d/kubernetes.conf<<EOF
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-net.ipv4.ip_forward = 1
-EOF
-sysctl --system >/dev/null 2>&1
-
 # Issue init node
 # https://stackoverflow.com/questions/44125020/cant-install-kubernetes-on-vagrant
-modprobe br_netfilter
+# https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+# sysctl params required by setup, params persist across reboots
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+
+# Apply sysctl params without reboot
+sudo sysctl --system
 
 # Disable swap
 sed -i '/swap/d' /etc/fstab
