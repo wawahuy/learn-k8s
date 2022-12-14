@@ -12,3 +12,13 @@ kubectl delete namespaces $name_namespace
 # > kubectl logs -n kube-system calico-node-275td -c install-cni
 # > kubectl logs -n kube-system calico-node-275td -c install-cni --previous=true
 # unable to retrieve container logs for docker://26fdb9e02c50be72b74dee0f003cd1e516184a206faddd1cb1b3587fb602f395
+
+# de gan nhan node
+kubectl label node <tennode> <tennhan>=<value>
+
+# get node by label
+kubectl get node -l  '<tennhan>=<value>'
+
+# remove label
+kubectl label node <tennode>-
+
