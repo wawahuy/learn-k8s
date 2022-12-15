@@ -85,6 +85,7 @@ function installOpenVPN() {
 
   	# Copy all the generated files
 	$SUDO cp -v $dir/etc/openvpn/* /etc/openvpn
+	$SUDO cp -v $dir/etc/openvpn/ccd/* /etc/openvpn/ccd
 
   	# Make cert revocation list readable for non-root
 	$SUDO chmod 644 /etc/openvpn/crl.pem

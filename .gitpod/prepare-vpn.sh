@@ -10,6 +10,6 @@ cd $ABSOLUTE_PATH_PV
 ./ssh.sh "rm -rf ~/shell/keys"
 ./ssh.sh "mkdir -p ~/shell/keys"
 ./ssh.sh "mkdir -p ~/shell/common"
-$SUDO ./scp.sh -r ./vpn-s2c/keys root@localhost:~/shell/keys
-$SUDO ./scp.sh ./vpn-s2c/server.sh root@localhost:~/shell/keys
+$SUDO ./scp.sh -r ./vpn-s2c/keys root@localhost:~/shell/vpn
+$SUDO ./scp.sh ./vpn-s2c/server.sh root@localhost:~/shell/vpn
 $SUDO ./scp.sh -r ./common root@localhost:~/shell
