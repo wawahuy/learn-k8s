@@ -60,7 +60,7 @@ function setupWorker() {
 }
 
 
-cho "🔥 Installing everything, this will be done only one time per workspace."
+echo "🔥 Installing everything, this will be done only one time per workspace."
 
 echo "Waiting for the rootfs to become available, it can take a while, open the terminal #2 for progress"
 waitrootfs
