@@ -41,7 +41,7 @@ function waitrootfs() {
 
 function setupMaser() {
     # setup openvpn server
-    $ABSOLUTE_PATH_K8S/prepare-vpn.sh
+    $ABSOLUTE_PATH_K8S/prepare-vpn-server.sh
 
     # setup k8s
     $ABSOLUTE_PATH_K8S/prepare-docker-kube.sh
