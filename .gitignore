@@ -108,3 +108,5 @@ dist
 shell.js
 _output/
 test.ovpn
+.gpserver.yaml
+gpkeep.js
