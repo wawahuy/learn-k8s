@@ -1,11 +1,13 @@
 {
   "name": "learn-k8s",
   "version": "1.0.0",
-  "description": "## Use Gitpod Solution ``` ______________________________ ___________________________   | | VPN Server, K8S Master  |   | |       Qemu x86          |   | |_________________________|   |         |  GitPod Container   | ________|_____________________|         |         | 1194/tcp (vpn)         |         |___________(SSH tunel)____________________                 |                   ______________|________________                 |                  | ___________________________   |                 |                  | | VPN Server, K8S Worker  |   |                 |                  | |       Qemu x86          |   |                 |                  | |_________________________|   |                 |                  |         |  GitPod Container   |                 |                  |_________|_____________________|                 |                 |                 |                 | ________________|______ |                      | |    Host Machine      | |  (Manage Tunnel)     | |______________________| ```",
-  "main": "mange-gitpod.js",
+  "description": "no",
+  "main": "",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "gpmange": "node gpmange/gpmange.js",
+    "gpcluster": "bash .gitpod/copy-cluster.sh",
+    "gpvpn": "sudo openvpn .gitpod/vpn-s2c/keys/host.ovpn"
   },
   "repository": {
     "type": "git",

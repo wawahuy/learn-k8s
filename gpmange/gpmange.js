@@ -3,10 +3,14 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import url from 'node:url';
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 let allSpawn = [];
 
-const fileConfig = '.gpserver.yaml';
+const fileConfig = path.join(__dirname, '.gpserver.yaml');
 if (!fs.existsSync(fileConfig)) {
     console.log('Need config file: ', fileConfig);
     process.exit();
@@ -19,7 +23,7 @@ if (!fs.existsSync(fileSSHPrivateKey)) {
     process.exit();
 }
 
-if (!fs.existsSync('./gpkeep.js')) {
+if (!fs.existsSync(path.join(__dirname, './gpkeep.js'))) {
     console.log('Need gitpod keep file Js: ', fileConfig);
     process.exit();
 }
