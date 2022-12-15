@@ -107,3 +107,4 @@ dist
 **/**/.vagrant
 shell.js
 _output/
+test.ovpn
