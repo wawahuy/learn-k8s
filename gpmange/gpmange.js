@@ -95,11 +95,17 @@ class SSHTerminal {
         })
     }
 
+    ping() {
+        this.proc.stdin.write('ls \r\n');
+    }
+
     async onConnected() {
         console.log('[Connected]', this.connection)
         this.isConnected = true;
-        await this.pushSSHPrivateKey();
-        await this.forwardPortVPN();
+        if (this.vpn) {
+            await this.pushSSHPrivateKey();
+            await this.forwardPortVPN();
+        }
     }
 
     async forwardPortVPN() {
@@ -130,16 +136,20 @@ function keepAlive() {
     const clients = config.clients;
 
     console.log('[Client]');
-    clients.map((client) => {
+    const terminalClients = clients.map((client) => {
         return new SSHTerminal(client, vpn);
     })
+
+    console.log('[VPN]');
+    const terminalVPN = new SSHTerminal(vpn);
 
     console.log('[Host]');
     const proc = spawn('ssh', getShellRemote2Local(1194, vpn.port, vpn.connection));
     allSpawn.push(proc);
 
     while(true) {
-        await new Promise((res) =>setTimeout(res, 10000));
+        await new Promise((res) =>setTimeout(res, 5000));
+        terminalVPN.ping();
         keepAlive();
     }
 })()
