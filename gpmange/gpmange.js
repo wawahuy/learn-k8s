@@ -90,7 +90,15 @@ class SSHTerminal {
                     this.onConnected();
                 }
             } else {
-                // console.log(`stdout: `, data.toString());
+                // if has vpn, it is forward port
+                if (this.vpn) {
+                    // check if is forward closed
+                    // re forward
+                    console.log('\r\n\r\n-------------------------------');
+                    console.log('[host]', connection)
+                    console.log('-------------------------------');
+                    console.log(`stdout: `, data.toString());
+                }
             }
         })
     }
@@ -103,6 +111,7 @@ class SSHTerminal {
         console.log('[Connected]', this.connection)
         this.isConnected = true;
         if (this.vpn) {
+            // if has vpn, it forward port
             await this.pushSSHPrivateKey();
             await this.forwardPortVPN();
         }
@@ -136,12 +145,14 @@ function keepAlive() {
     const clients = config.clients;
 
     console.log('[Client]');
-    const terminalClients = clients.map((client) => {
+    const terminalForwardClients = clients.map((client) => {
         return new SSHTerminal(client, vpn);
     })
 
-    console.log('[VPN]');
-    const terminalVPN = new SSHTerminal(vpn);
+    console.log('[Ping]');
+    const terminalPingClients = [...clients, vpn.connection].map((client) => {
+        return new SSHTerminal(client);
+    })
 
     console.log('[Host]');
     const proc = spawn('ssh', getShellRemote2Local(1194, vpn.port, vpn.connection));
@@ -149,8 +160,8 @@ function keepAlive() {
 
     while(true) {
         await new Promise((res) =>setTimeout(res, 5000));
-        terminalVPN.ping();
-        keepAlive();
+        terminalPingClients.forEach((cl) => cl.ping());
+        // keepAlive();
     }
 })()
 
