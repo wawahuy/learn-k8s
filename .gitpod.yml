@@ -1,5 +1,8 @@
 image: gitpod/workspace-full
 tasks:
+  - name: prepare k8s
+    command: |
+      .gitpod/prepare-k8s.sh $K8S_TYPE
   - name: kernel dev environment
     init: |
       sudo apt update -y
