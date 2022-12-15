@@ -44,8 +44,9 @@ function setupMaser() {
     $ABSOLUTE_PATH_K8S/prepare-vpn-server.sh
 
     # setup k8s
-    $ABSOLUTE_PATH_K8S/prepare-docker-kube.sh
-
+    $SUDO $ABSOLUTE_PATH_K8S/scp.sh $ABSOLUTE_PATH_K8S/prepare-docker-kube.sh root@localhost:~/shell
+    $ABSOLUTE_PATH_K8S/ssh.sh "~/shell/prepare-docker-kube.sh"
+    
     # run kubeadm init
     $ABSOLUTE_PATH_K8S/ssh.sh "kubeadm init --apiserver-advertise-address=10.8.0.1 --pod-network-cidr=192.168.0.0/16"
 

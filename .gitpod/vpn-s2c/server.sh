@@ -84,6 +84,7 @@ function installOpenVPN() {
 	echo "set_var EASYRSA_REQ_CN $SERVER_CN" >>vars
 
   	# Copy all the generated files
+	$SUDO mkdir -p /etc/openvpn/ccd
 	$SUDO cp -v $dir/etc/openvpn/* /etc/openvpn
 	$SUDO cp -v $dir/etc/openvpn/ccd/* /etc/openvpn/ccd
 
