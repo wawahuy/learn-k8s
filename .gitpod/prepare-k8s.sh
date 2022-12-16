@@ -50,6 +50,9 @@ function setupMaser() {
     # run kubeadm init
     $ABSOLUTE_PATH_K8S/ssh.sh "kubeadm init --apiserver-advertise-address=10.8.0.1 --pod-network-cidr=192.168.0.0/16"
 
+    # run master-token
+    $ABSOLUTE_PATH_K8S/scp.sh -r $ABSOLUTE_PATH_K8S/master-token root@localhost:~/shell
+    $ABSOLUTE_PATH_K8S/ssh.sh "~/shell/master-token/run.sh"
 }
 
 function setupWorker() {
