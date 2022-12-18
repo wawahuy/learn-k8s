@@ -5,7 +5,7 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "gpmange": "node gpmange/gpmange.js",
+    "gpmanage": "node gpmange/gpmange.js",
     "gpcluster": "bash .gitpod/copy-cluster.sh",
     "gpvpn": "sudo openvpn .gitpod/vpn-s2c/keys/host.ovpn"
   },

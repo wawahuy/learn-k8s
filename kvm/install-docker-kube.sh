@@ -66,6 +66,7 @@ systemctl enable kubelet
 systemctl start kubelet
 
 # Configure NetworkManager before attempting to use Calico networking.
+mkdir -p /etc/NetworkManager/conf.d 
 cat >>/etc/NetworkManager/conf.d/calico.conf<<EOF
 [keyfile]
 unmanaged-devices=interface-name:cali*;interface-name:tunl*
